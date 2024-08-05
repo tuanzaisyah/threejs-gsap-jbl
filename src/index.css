@@ -69,4 +69,15 @@
   .home-card {
     @apply bg-[rgb(231,217,202,25%)] rounded-lg py-4 px-6;
   }
+
+  /* SCROLL BAR */
+  ::-webkit-scrollbar {
+    width: 0.6rem;
+    background: #bdbdbd;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #9f9483;
+    border-radius: 100vh;
+  }
 }
