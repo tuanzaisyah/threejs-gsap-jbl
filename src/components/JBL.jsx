@@ -1,12 +1,19 @@
 import { useGLTF } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import gsap from "gsap";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const JBL = ({ controlRef }) => {
   const { nodes, materials } = useGLTF("/jbl.glb");
   const { camera } = useThree();
   const tl = gsap.timeline();
+
+  const [model, setModel] = useState({
+    title: "JBL Tour One",
+    color: ["#A89C8B", "#3b3b3b", "#53596E"],
+  });
+
+  const [selectedColor, setSelectedColor] = useState(model.color[0]);
 
   useEffect(() => {
     const controls = controlRef.current;
@@ -19,6 +26,7 @@ const JBL = ({ controlRef }) => {
         trigger: ".feature-1",
         start: "top bottom",
         end: "top top",
+        snap: true,
         scrub: true,
         immediateRender: false,
       },
@@ -44,6 +52,7 @@ const JBL = ({ controlRef }) => {
           start: "top bottom",
           end: "top top",
           scrub: true,
+          snap: true,
           immediateRender: false,
         },
       })
@@ -68,6 +77,7 @@ const JBL = ({ controlRef }) => {
           start: "top bottom",
           end: "top top",
           scrub: true,
+          snap: true,
           immediateRender: false,
         },
       })
@@ -92,6 +102,7 @@ const JBL = ({ controlRef }) => {
           start: "top bottom",
           end: "top top",
           scrub: true,
+          snap: true,
           immediateRender: false,
         },
       })
