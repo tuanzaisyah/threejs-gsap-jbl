@@ -34,8 +34,7 @@ const JBL = ({ controlRef, selectedColor, tryMode }) => {
         setModelPosition([-0.3, -0.9, -0.2]);
       }
 
-      // Animation timeline
-      tl.clear(); // Clear the timeline before setting it up again
+      tl.clear();
 
       tl.to(camera.position, {
         x: -0.89,
@@ -129,7 +128,7 @@ const JBL = ({ controlRef, selectedColor, tryMode }) => {
         })
         .to(controls.target, {
           x: isDesktop ? 0 : isTablet ? 0 : -0.29,
-          y: isDesktop ? 0.1 : isTablet ? 0 : 0,
+          y: isDesktop ? 0.1 : isTablet ? 0 : -0.3,
           z: 0,
           scrollTrigger: {
             trigger: "#personalized",
