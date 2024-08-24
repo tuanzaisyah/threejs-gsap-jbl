@@ -22,13 +22,13 @@ const Home = () => {
         </div>
       </div>
       <div className="basis-2/3 flex flex-col justify-center relative">
-        <div className="glassmorphism-home absolute top-20 md:top-56 right-0 md:right-16 lg:right-44 z-20">
+        <div className="glassmorphism-home absolute -top-4 md:top-36 right-0 lg:right-56 z-20">
           <h4>Total Music Playback</h4>
           <h5 className="text-2xl font-medium">
             50 <span className="text-xl">Hours</span>{" "}
           </h5>
         </div>
-        <div className="glassmorphism-home flex flex-row gap-2 items-center absolute bottom-20 md:bottom-56 md:right-24 lg:right-10 z-20">
+        <div className="glassmorphism-home flex flex-row gap-2 items-center absolute bottom-14 md:bottom-40 lg:bottom-56 right-8 lg:right-10 z-20">
           <BsSoundwave className="border border-grey rounded-full p-1 text-3xl lg:text-4xl" />
           <h4 className="font-medium lg:text-2xl">Adaptive Noise Cancelling</h4>
         </div>
