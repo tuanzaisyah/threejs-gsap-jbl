@@ -129,18 +129,9 @@ const JBL = ({ controlRef, selectedColor, tryMode }) => {
           end: "top top",
           scrub: true,
           snap: true,
-
           immediateRender: false,
         },
       });
-
-    // ScrollTrigger.create({
-    //   trigger: "#personalized",
-    //   pin: true,
-    //   start: "top top",
-    //   end: "bottom top",
-    //   pinSpacing: false,
-    // });
   }, [camera]);
 
   useFrame(() => {

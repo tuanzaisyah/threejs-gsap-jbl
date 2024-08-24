@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 
-const Personalized = ({
-  setTryMode,
-  setSelectedColor,
-  originalColor,
-  controlRef,
-}) => {
+const Personalized = ({ setTryMode, setSelectedColor, originalColor }) => {
   const [model, setModel] = useState({
     title: "JBL Tour One",
     color: ["#A89C8B", "#3b3b3b", "#53596E", "#e8e5e2"],
