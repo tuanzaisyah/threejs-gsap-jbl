@@ -2,7 +2,7 @@ import { useGLTF } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import * as THREE from "three";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -10,41 +10,37 @@ gsap.registerPlugin(ScrollTrigger);
 const JBL = ({ controlRef, selectedColor, tryMode }) => {
   const { nodes, materials } = useGLTF("/jbl.glb");
   const { camera } = useThree();
+  const [modelScale, setModelScale] = useState(9);
+  const [modelPosition, setModelPosition] = useState([0, -0.8, -0.2]);
   const tl = gsap.timeline();
-
-  useEffect(() => {
-    if (tryMode) {
-      // camera.position.set(0.3, 4.17, 9.08);
-      const timeoutId = setTimeout(() => {
-        camera.position.set(-0.6, -0.56, 9.97);
-      }, 500);
-
-      return () => clearTimeout(timeoutId);
-    } else {
-      camera.position.set(6.8, -2.54, 6.88);
-    }
-  }, [tryMode, camera]);
 
   useEffect(() => {
     const controls = controlRef.current;
 
-    tl.to(camera.position, {
-      x: -0.89,
-      y: 0.55,
-      z: -9.95,
-      scrollTrigger: {
-        trigger: ".feature-1",
-        start: "top bottom",
-        end: "top top",
-        snap: true,
-        scrub: true,
-        immediateRender: false,
-      },
-    })
-      .to(controls.target, {
-        x: -1,
-        y: 0,
-        z: 0,
+    let mm = gsap.matchMedia();
+
+    const applyAnimations = (context) => {
+      let { isDesktop, isTablet, isMobile } = context.conditions;
+
+      // Adjust scale and position based on screen size
+      if (isDesktop) {
+        setModelScale(9);
+        setModelPosition([0, -0.8, -0.2]);
+      } else if (isTablet) {
+        setModelScale(7);
+        setModelPosition([0, -0.7, -0.2]);
+      } else if (isMobile) {
+        setModelScale(6);
+        setModelPosition([-0.3, -0.9, -0.2]);
+      }
+
+      // Animation timeline
+      tl.clear(); // Clear the timeline before setting it up again
+
+      tl.to(camera.position, {
+        x: -0.89,
+        y: 0.55,
+        z: -9.95,
         scrollTrigger: {
           trigger: ".feature-1",
           start: "top bottom",
@@ -53,86 +49,147 @@ const JBL = ({ controlRef, selectedColor, tryMode }) => {
           immediateRender: false,
         },
       })
-      .to(camera.position, {
-        x: 7.01,
-        y: -2.28,
-        z: -6.75,
-        scrollTrigger: {
-          trigger: ".feature-2",
-          start: "top bottom",
-          end: "top top",
-          scrub: true,
-          snap: true,
-          immediateRender: false,
+        .to(controls.target, {
+          x: isDesktop ? -1 : isTablet ? -0.35 : -0.3,
+          y: isDesktop ? 0 : isTablet ? 0 : -0.55,
+          z: 0,
+          scrollTrigger: {
+            trigger: ".feature-1",
+            start: "top bottom",
+            end: "top top",
+            scrub: true,
+            snap: true,
+            immediateRender: false,
+          },
+        })
+        .to(camera.position, {
+          x: 7.01,
+          y: -2.28,
+          z: -6.75,
+          scrollTrigger: {
+            trigger: ".feature-2",
+            start: "top bottom",
+            end: "top top",
+            scrub: true,
+            immediateRender: false,
+          },
+        })
+        .to(controls.target, {
+          x: isDesktop ? 1 : isTablet ? 0.3 : -0.5,
+          y: isDesktop ? 0 : isTablet ? 0 : -0.55,
+          z: 0,
+          scrollTrigger: {
+            trigger: ".feature-2",
+            start: "top bottom",
+            end: "top top",
+            scrub: true,
+            snap: true,
+
+            immediateRender: false,
+          },
+        })
+        .to(camera.position, {
+          x: 6.03,
+          y: 4.72,
+          z: -6.45,
+          scrollTrigger: {
+            trigger: ".feature-3",
+            start: "top bottom",
+            end: "top top",
+            scrub: true,
+
+            immediateRender: false,
+          },
+        })
+        .to(controls.target, {
+          x: isDesktop ? -2 : isTablet ? -0.8 : -0.55,
+          y: -isDesktop ? -1 : isTablet ? -0.5 : -0.8,
+          z: 0,
+          scrollTrigger: {
+            trigger: ".feature-3",
+            start: "top bottom",
+            end: "top top",
+            scrub: true,
+            snap: true,
+
+            immediateRender: false,
+          },
+        })
+        .to(camera.position, {
+          x: 0.3,
+          y: 4.17,
+          z: 9.08,
+          scrollTrigger: {
+            trigger: "#personalized",
+            start: "top bottom",
+            end: "top top",
+            scrub: true,
+            immediateRender: false,
+          },
+        })
+        .to(controls.target, {
+          x: isDesktop ? 0 : isTablet ? 0 : -0.29,
+          y: isDesktop ? 0.1 : isTablet ? 0 : 0,
+          z: 0,
+          scrollTrigger: {
+            trigger: "#personalized",
+            start: "top bottom",
+            end: "top top",
+            scrub: true,
+            snap: true,
+
+            immediateRender: false,
+          },
+        });
+    };
+
+    if (tryMode) {
+      const timeoutId = setTimeout(() => {
+        camera.position.set(-0.6, -0.56, 9.97);
+
+        mm.add(
+          {
+            isDesktop: "(min-width: 1024px)",
+            isTablet: "(min-width: 768px) and (max-width: 1023px)",
+            isMobile: "(max-width: 767px)",
+          },
+          (context) => {
+            applyAnimations(context);
+
+            return () => {
+              tl.kill();
+            };
+          }
+        );
+      }, 500);
+
+      return () => {
+        clearTimeout(timeoutId);
+        mm.revert();
+      };
+    } else {
+      camera.position.set(6.8, -2.54, 6.88);
+
+      mm.add(
+        {
+          isDesktop: "(min-width: 1024px)",
+          isTablet: "(min-width: 768px) and (max-width: 1023px)",
+          isMobile: "(max-width: 767px)",
         },
-      })
-      .to(controls.target, {
-        x: 1,
-        y: 0,
-        z: 0,
-        scrollTrigger: {
-          trigger: ".feature-2",
-          start: "top bottom",
-          end: "top top",
-          scrub: true,
-          immediateRender: false,
-        },
-      })
-      .to(camera.position, {
-        x: 6.03,
-        y: 4.72,
-        z: -6.45,
-        scrollTrigger: {
-          trigger: ".feature-3",
-          start: "top bottom",
-          end: "top top",
-          scrub: true,
-          snap: true,
-          immediateRender: false,
-        },
-      })
-      .to(controls.target, {
-        x: -2.5,
-        y: -1.5,
-        z: 0,
-        scrollTrigger: {
-          trigger: ".feature-3",
-          start: "top bottom",
-          end: "top top",
-          scrub: true,
-          immediateRender: false,
-        },
-      })
-      .to(camera.position, {
-        // x: -0.6,
-        // y: -0.56,
-        // z: 9.97,
-        x: 0.3,
-        y: 4.17,
-        z: 9.08,
-        scrollTrigger: {
-          trigger: "#personalized",
-          start: "top bottom",
-          end: "top top",
-          scrub: true,
-          snap: true,
-          immediateRender: false,
-        },
-      })
-      .to(controls.target, {
-        x: 0,
-        y: 0.3,
-        z: 0,
-        scrollTrigger: {
-          trigger: "#personalized",
-          start: "top bottom",
-          end: "top top",
-          scrub: true,
-          snap: true,
-          immediateRender: false,
-        },
-      });
-  }, [camera]);
+        (context) => {
+          applyAnimations(context);
+
+          return () => {
+            tl.kill();
+          };
+        }
+      );
+    }
+
+    return () => {
+      mm.revert();
+    };
+  }, [tryMode, camera, controlRef]);
 
   useFrame(() => {
     if (controlRef.current) {
@@ -151,7 +208,7 @@ const JBL = ({ controlRef, selectedColor, tryMode }) => {
   return (
     <>
       {/* <directionalLight castShadow position={[-2.38, 1.32, 0.74]} /> */}
-      <group scale={15} position={[0, -1.3, -0.5]}>
+      <group scale={modelScale} position={modelPosition}>
         <mesh
           castShadow
           receiveShadow
