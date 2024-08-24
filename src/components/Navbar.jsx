@@ -23,19 +23,34 @@ const Navbar = () => {
             />
           </div>
           <ul className="flex flex-col md:flex-row gap-4 md:gap-8 items-center">
-            <li className="hover:text-yellow-100 md:hover:text-yellow-700 md:text-lg cursor-pointer">
+            <li
+              onClick={() => setMenu(false)}
+              className="hover:text-yellow-100 md:hover:text-yellow-700 md:text-lg cursor-pointer"
+            >
               <a href="#home">Home</a>
             </li>
-            <li className="hover:text-yellow-100 md:hover:text-yellow-700 md:text-lg cursor-pointer">
+            <li
+              onClick={() => setMenu(false)}
+              className="hover:text-yellow-100 md:hover:text-yellow-700 md:text-lg cursor-pointer"
+            >
               <a href="#features">Features</a>
             </li>
-            <li className="hover:text-yellow-100 md:hover:text-yellow-700 md:text-lg cursor-pointer">
+            <li
+              onClick={() => setMenu(false)}
+              className="hover:text-yellow-100 md:hover:text-yellow-700 md:text-lg cursor-pointer"
+            >
               <a href="#personalized">Personalized</a>
             </li>
-            <li className="hover:text-yellow-100 md:hover:text-yellow-700 md:text-lg cursor-pointer">
+            <li
+              onClick={() => setMenu(false)}
+              className="hover:text-yellow-100 md:hover:text-yellow-700 md:text-lg cursor-pointer"
+            >
               <a href="#highlights">Highlights</a>
             </li>
-            <li className="hover:text-yellow-100 md:hover:text-yellow-700 md:text-lg cursor-pointer">
+            <li
+              onClick={() => setMenu(false)}
+              className="hover:text-yellow-100 md:hover:text-yellow-700 md:text-lg cursor-pointer"
+            >
               <a href="#contact">Contact Us</a>
             </li>
             <li>
