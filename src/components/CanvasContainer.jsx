@@ -13,7 +13,7 @@ const CanvasContainer = ({ tryMode, selectedColor }) => {
         tryMode ? "pointer-events-auto" : "pointer-events-none"
       }`}
     >
-      <Canvas camera={{ fov: 25 }}>
+      <Canvas camera={{ fov: 15 }}>
         <JBL
           controlRef={controlRef}
           selectedColor={selectedColor}
