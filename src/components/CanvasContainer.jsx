@@ -22,7 +22,7 @@ const CanvasContainer = ({ tryMode, selectedColor }) => {
         <OrbitControls
           ref={controlRef}
           enableRotate={tryMode}
-          enableZoom={tryMode}
+          enableZoom={false}
           enablePan={tryMode}
         />
         <Environment preset="warehouse" />
