@@ -4,7 +4,7 @@ import { BsTwitterX } from "react-icons/bs";
 
 const Footer = () => {
   return (
-    <div id="contact" className="w-screen h-full bg-black">
+    <div id="contact" className="w-screen h-full bg-black relative z-40">
       <div className="screen-max-width px-6 py-10 flex flex-col md:flex-row gap-3">
         <div className="basis-1/5">
           <h1 className="font-semibold text-2xl text-yellow-100">JBL</h1>
