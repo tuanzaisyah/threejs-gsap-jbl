@@ -1,30 +1,33 @@
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import JBL from "./JBL";
 import { Environment, OrbitControls } from "@react-three/drei";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/all";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const CanvasContainer = () => {
+const CanvasContainer = ({ tryMode, selectedColor }) => {
   const controlRef = useRef();
+
   return (
-    <Canvas
-      camera={{
-        position: [6.8, -2.54, 6.88],
-        fov: 25,
-      }}
+    <div
+      id="model"
+      className={`w-full h-screen sticky top-0 ${
+        tryMode ? "pointer-events-auto" : "pointer-events-none"
+      }`}
     >
-      <JBL controlRef={controlRef} />
-      <OrbitControls
-        enableRotate={false}
-        enableZoom={false}
-        enablePan={false}
-        ref={controlRef}
-      />
-      <Environment preset="warehouse" />
-    </Canvas>
+      <Canvas camera={{ fov: 25 }}>
+        <JBL
+          controlRef={controlRef}
+          selectedColor={selectedColor}
+          tryMode={tryMode}
+        />
+        <OrbitControls
+          ref={controlRef}
+          enableRotate={tryMode}
+          enableZoom={tryMode}
+          enablePan={tryMode}
+        />
+        <Environment preset="warehouse" />
+      </Canvas>
+    </div>
   );
 };
 

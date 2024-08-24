@@ -6,7 +6,7 @@ import Highlight4 from "../assets/highlight4.png";
 
 const Highlights = () => {
   return (
-    <section id="highlights" className="w-screen h-full bg-yellow-700">
+    <section id="highlights" className="w-screen h-full bg-yellow-700 z-40">
       <div className="screen-max-width px-6 py-10 flex flex-col gap-6 md:gap-4">
         <div className="flex flex-col md:flex-row gap-6 md:gap-4">
           <div className="glassmorphism rounded-2xl md:basis-2/3 flex flex-col md:flex-row">

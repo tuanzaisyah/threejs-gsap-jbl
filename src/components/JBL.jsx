@@ -1,19 +1,29 @@
 import { useGLTF } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import gsap from "gsap";
-import { useEffect, useState } from "react";
+import { ScrollTrigger } from "gsap/all";
+import { useEffect } from "react";
+import * as THREE from "three";
 
-const JBL = ({ controlRef }) => {
+gsap.registerPlugin(ScrollTrigger);
+
+const JBL = ({ controlRef, selectedColor, tryMode }) => {
   const { nodes, materials } = useGLTF("/jbl.glb");
   const { camera } = useThree();
   const tl = gsap.timeline();
 
-  const [model, setModel] = useState({
-    title: "JBL Tour One",
-    color: ["#A89C8B", "#3b3b3b", "#53596E"],
-  });
+  useEffect(() => {
+    if (tryMode) {
+      // camera.position.set(0.3, 4.17, 9.08);
+      const timeoutId = setTimeout(() => {
+        camera.position.set(-0.6, -0.56, 9.97);
+      }, 500);
 
-  const [selectedColor, setSelectedColor] = useState(model.color[0]);
+      return () => clearTimeout(timeoutId);
+    } else {
+      camera.position.set(6.8, -2.54, 6.88);
+    }
+  }, [tryMode, camera]);
 
   useEffect(() => {
     const controls = controlRef.current;
@@ -94,9 +104,12 @@ const JBL = ({ controlRef }) => {
         },
       })
       .to(camera.position, {
-        x: -0.6,
-        y: -0.56,
-        z: 9.97,
+        // x: -0.6,
+        // y: -0.56,
+        // z: 9.97,
+        x: 0.3,
+        y: 4.17,
+        z: 9.08,
         scrollTrigger: {
           trigger: "#personalized",
           start: "top bottom",
@@ -108,16 +121,26 @@ const JBL = ({ controlRef }) => {
       })
       .to(controls.target, {
         x: 0,
-        y: 0,
+        y: 0.3,
         z: 0,
         scrollTrigger: {
           trigger: "#personalized",
           start: "top bottom",
           end: "top top",
           scrub: true,
+          snap: true,
+
           immediateRender: false,
         },
       });
+
+    // ScrollTrigger.create({
+    //   trigger: "#personalized",
+    //   pin: true,
+    //   start: "top top",
+    //   end: "bottom top",
+    //   pinSpacing: false,
+    // });
   }, [camera]);
 
   useFrame(() => {
@@ -125,6 +148,14 @@ const JBL = ({ controlRef }) => {
       controlRef.current.update();
     }
   });
+
+  // change model color
+  useEffect(() => {
+    Object.values(materials).forEach((material) => {
+      material.color = new THREE.Color(selectedColor);
+      material.needsUpdate = true;
+    });
+  }, [materials, selectedColor]);
 
   return (
     <>
