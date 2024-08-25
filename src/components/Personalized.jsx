@@ -25,9 +25,11 @@ const Personalized = ({ setTryMode, setSelectedColor, originalColor }) => {
   return (
     <section
       id="personalized"
-      className="w-screen h-screen screen-max-width px-6 flex flex-col  items-center relative pointer-events-auto"
+      className={`w-screen h-screen screen-max-width px-6 flex flex-col  items-center relative z-20 ${
+        isTryMode ? "pointer-events-none" : "pointer-events-auto"
+      }`}
     >
-      <div>
+      <div className="pointer-events-auto">
         <button
           className="btn mt-20 cursor-pointer hover:opacity-80 transition-opacity relative z-20"
           onClick={handleTry}

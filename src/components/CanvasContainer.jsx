@@ -9,7 +9,7 @@ const CanvasContainer = ({ tryMode, selectedColor }) => {
   return (
     <div
       id="model"
-      className={`w-full h-screen sticky top-0 ${
+      className={`w-full h-screen fixed top-0 z-10  ${
         tryMode ? "pointer-events-auto" : "pointer-events-none"
       }`}
     >

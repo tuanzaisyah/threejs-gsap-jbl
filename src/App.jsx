@@ -14,9 +14,7 @@ function App() {
   const controlRef = useRef();
   return (
     <>
-      <div className=" h-screen w-full fixed top-0 z-10 pointer-events-none">
-        <CanvasContainer tryMode={tryMode} selectedColor={selectedColor} />
-      </div>
+      <CanvasContainer tryMode={tryMode} selectedColor={selectedColor} />
       {!tryMode && (
         <>
           <Navbar />
