@@ -5,7 +5,7 @@ import { IoIosMenu, IoIosClose } from "react-icons/io";
 const Navbar = () => {
   const [menu, setMenu] = useState(false);
   return (
-    <nav className="w-screen h-14 px-6 py-4 flex flex-row justify-between items-center relative z-10">
+    <nav className="w-screen h-14 px-6 py-4 flex flex-row justify-between items-center relative z-30">
       <div>
         <h3 className="font-medium text-2xl">JBL</h3>
       </div>
